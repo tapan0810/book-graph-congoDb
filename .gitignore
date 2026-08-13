@@ -1,0 +1,29 @@
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# User secrets
+secrets.json
+
+# Node / Angular
+**/node_modules/
+**/dist/
+**/.angular/cache/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
