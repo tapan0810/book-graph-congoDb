@@ -26,6 +26,17 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSingleton<GraphDatabase>();
 builder.Services.AddScoped<BookService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Angular", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Swagger
@@ -34,6 +45,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseCors("Angular");
 
 app.UseHttpsRedirection();
 

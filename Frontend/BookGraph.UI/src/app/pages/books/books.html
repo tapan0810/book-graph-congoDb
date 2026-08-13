@@ -1,0 +1,237 @@
+<div class="container py-5">
+
+  <!-- ============================= -->
+  <!-- HEADER -->
+  <!-- ============================= -->
+
+  <div class="text-center mb-5">
+
+    <div class="d-flex justify-content-center align-items-center gap-3 mb-2">
+
+      <span class="fs-1">
+        📚
+      </span>
+
+      <h1 class="display-5 fw-bold mb-0 text-dark">
+        Book Explorer
+      </h1>
+
+    </div>
+
+    <p class="lead text-secondary mb-0">
+      Explore books powered by a graph database
+    </p>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- SEARCH -->
+  <!-- ============================= -->
+
+  <div class="row justify-content-center mb-5">
+
+    <div class="col-12 col-lg-8">
+
+      <div class="input-group input-group-lg shadow-sm">
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search books by title..."
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="searchBooks()"
+        />
+
+        <button
+          type="button"
+          class="btn btn-primary px-4"
+          (click)="searchBooks()">
+
+          Search
+
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary px-4"
+          (click)="searchTerm = ''; loadBooks()">
+
+          Clear
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- ERROR -->
+  <!-- ============================= -->
+
+  <div
+    *ngIf="errorMessage"
+    class="alert alert-danger alert-dismissible fade show shadow-sm"
+    role="alert">
+
+    <strong>Something went wrong.</strong>
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- LOADING -->
+  <!-- ============================= -->
+
+  <div
+    *ngIf="loading"
+    class="text-center py-5">
+
+    <div
+      class="spinner-border text-primary"
+      style="width: 3rem; height: 3rem;"
+      role="status">
+
+      <span class="visually-hidden">
+        Loading...
+      </span>
+
+    </div>
+
+    <p class="text-secondary mt-3 mb-0">
+      Loading books...
+    </p>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- BOOK LIST -->
+  <!-- ============================= -->
+
+  <div *ngIf="!loading">
+
+    <!-- RESULT HEADER -->
+
+    <div
+      *ngIf="books.length > 0"
+      class="d-flex justify-content-between align-items-center mb-4">
+
+      <div>
+
+        <h4 class="fw-semibold mb-1">
+          Books
+        </h4>
+
+        <p class="text-secondary mb-0">
+          {{ books.length }} book{{ books.length === 1 ? '' : 's' }} found
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- BOOK CARDS -->
+    <!-- ============================= -->
+
+    <div class="row g-4">
+
+      <div
+        *ngFor="let book of books"
+        class="col-12 col-md-6 col-lg-4">
+
+        <div
+          class="card h-100 border-0 shadow-sm">
+
+          <div class="card-body d-flex flex-column p-4">
+
+            <!-- TITLE -->
+
+            <h5
+              class="card-title fw-bold text-dark mb-3">
+
+              {{ book.title }}
+
+            </h5>
+
+
+            <!-- YEAR + RATING -->
+
+            <div
+              class="d-flex justify-content-between align-items-center mb-3">
+
+              <span class="badge bg-light text-secondary border">
+
+                Published {{ book.publishedYear }}
+
+              </span>
+
+              <span class="fw-semibold text-dark">
+
+                ⭐ {{ book.rating }}
+
+              </span>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <p
+              class="card-text text-secondary flex-grow-1 mb-4">
+
+              {{ book.description }}
+
+            </p>
+
+
+            <!-- BUTTON -->
+
+            <a
+              [routerLink]="['/books', book.id]"
+              class="btn btn-primary w-100">
+
+              View Details
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- NO BOOKS -->
+    <!-- ============================= -->
+
+    <div
+      *ngIf="books.length === 0 && !errorMessage"
+      class="text-center py-5">
+
+      <div class="fs-1 mb-3">
+        📖
+      </div>
+
+      <h4 class="fw-semibold">
+        No books found
+      </h4>
+
+      <p class="text-secondary">
+        Try searching with a different title.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
